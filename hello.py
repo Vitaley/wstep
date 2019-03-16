@@ -1,7 +1,3 @@
-def app_me(env, st_head):
-	headers = ['Content-Type', 'text/plain']
-	body = ''
-	for i in env['QUERY_STRING']:
-		body += i +'\n'
-	st_head('200 OK', headers)
-	return body
+def app_me(environ, start_response):
+	start_response('200 OK', [('Content-Type', 'text/plain')])
+	return [bytes('\r\n'.join(environ['QUERY_STRING'].split('&')), encoding="utf8")]
